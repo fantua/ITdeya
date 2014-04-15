@@ -27,7 +27,12 @@ class ControllerBase extends Controller{
     }
 
 	public function afterExecuteRoute(){
-		$this->view->setViewsDir($this->view->getViewsDir() . 'admin/');
+        $viewsDir = $this->view->getViewsDir();
+
+        if(strpos($viewsDir, 'admin/'))
+            $viewsDir = str_replace('admin/', '', $viewsDir);
+
+		$this->view->setViewsDir($viewsDir . 'admin/');
 	}
 
 }
