@@ -1,6 +1,7 @@
 <?php
 
 error_reporting(E_ALL);
+setlocale(LC_ALL, 'ru_RU.UTF-8');
 
 try {
 

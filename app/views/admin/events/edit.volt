@@ -58,8 +58,8 @@
 <script>
     function initialize() {
         var mapOptions = {
-            center: new google.maps.LatLng(48.921692, 24.711256),
-            zoom: 12
+            center: new google.maps.LatLng({{ events.place['place_k'] }}, {{ events.place['place_a'] }}),
+            zoom: 17
         };
         var map = new google.maps.Map(document.getElementById('map-canvas'),
                 mapOptions);
@@ -79,6 +79,22 @@
             map: map,
             anchorPoint: new google.maps.Point(0, -29)
         });
+
+        infowindow.close();
+        marker.setVisible(false);
+
+        marker.setIcon(/** @type {google.maps.Icon} */({
+            url: '{{ events.place['place_icon'] }}',
+            size: new google.maps.Size(71, 71),
+            origin: new google.maps.Point(0, 0),
+            anchor: new google.maps.Point(17, 34),
+            scaledSize: new google.maps.Size(35, 35)
+        }));
+        marker.setPosition(new google.maps.LatLng({{ events.place['place_k'] }}, {{ events.place['place_a'] }}));
+        marker.setVisible(true);
+
+        infowindow.setContent('<div><strong>{{ events.place['place_name'] }}</strong><br> {{ events.place['place_address'] }}');
+        infowindow.open(map, marker);
 
         google.maps.event.addListener(autocomplete, 'place_changed', function() {
             infowindow.close();
@@ -116,6 +132,13 @@
 
             infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
             infowindow.open(map, marker);
+
+            $('#place_a').val(place.geometry.location.A);
+            $('#place_k').val(place.geometry.location.k);
+            $('#place_icon').val(place.icon);
+            $('#place_name').val(place.name);
+            $('#place_address').val(address);
+
         });
 
         // Sets a listener on a radio button to change the filter type on Places
@@ -175,7 +198,12 @@
 <div class="form-group">
     <label for="pac-input" class="control-label col-xs-2">Місце</label>
     <div class="col-xs-10">
-        <input id="pac-input" name="pac-input" class="controls" type="text" placeholder="8 Гарбарська" value="{{ events.place }}">
+        <input type="hidden" name="place_k" id="place_k" value="{{ events.place['place_k'] }}">
+        <input type="hidden" name="place_a" id="place_a" value="{{ events.place['place_a'] }}">
+        <input type="hidden" name="place_icon" id="place_icon" value="{{ events.place['place_icon'] }}">
+        <input type="hidden" name="place_name" id="place_name" value="{{ events.place['place_name'] }}">
+        <input type="hidden" name="place_address" id="place_address" value="{{ events.place['place_address'] }}">
+        <input id="pac-input" name="pac-input" class="controls" type="text" placeholder="8 Гарбарська" value="{{ events.place['value'] }}" required>
         <div id="type-selector" class="controls">
             <input type="radio" name="type" id="changetype-all" checked="checked">
             <label for="changetype-all">All</label>
@@ -213,7 +241,7 @@
 </div>
 <div class="form-group">
     <div class="col-xs-offset-2 col-xs-10">
-        <button type="submit" class="btn btn-primary">Додати</button>
+        <button type="submit" class="btn btn-primary">Редагувати</button>
     </div>
 </div>
 </form>
@@ -243,6 +271,5 @@
         if(i == n)
             i--;
     }
-
 
 </script>

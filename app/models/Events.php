@@ -80,6 +80,12 @@ class Events extends \Phalcon\Mvc\Model
     public function afterFetch(){
         $this->date = date('d-m-Y H:i', $this->date);
         $this->data = unserialize(base64_decode($this->data));
+        $this->place = unserialize(base64_decode($this->place));
+    }
+
+    public function initialize()
+    {
+        $this->hasMany("id", "EventMembers", "event_id");
     }
 
 }

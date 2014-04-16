@@ -1,6 +1,9 @@
 <?php
 
-class News extends \Phalcon\Mvc\Model
+
+
+
+class Gallery extends \Phalcon\Mvc\Model
 {
 
     /**
@@ -19,22 +22,10 @@ class News extends \Phalcon\Mvc\Model
      *
      * @var string
      */
-    public $preview_content;
+    public $description;
      
     /**
-     *
-     * @var string
-     */
-    public $full_content;
-     
-    /**
-     *
-     * @var integer
-     */
-    public $date;
-     
-    /**
-     * @return News[]
+     * @return Gallery[]
      */
     public static function find($parameters = array())
     {
@@ -42,7 +33,7 @@ class News extends \Phalcon\Mvc\Model
     }
 
     /**
-     * @return News
+     * @return Gallery
      */
     public static function findFirst($parameters = array())
     {
@@ -57,14 +48,8 @@ class News extends \Phalcon\Mvc\Model
         return array(
             'id' => 'id', 
             'name' => 'name', 
-            'preview_content' => 'preview_content', 
-            'full_content' => 'full_content', 
-            'date' => 'date'
+            'description' => 'description'
         );
-    }
-
-    public function afterFetch(){
-        $this->date = date('F d, Y H:i', $this->date);
     }
 
 }

@@ -116,6 +116,12 @@
 
             infowindow.setContent('<div><strong>' + place.name + '</strong><br>' + address);
             infowindow.open(map, marker);
+
+            $('#place_a').val(place.geometry.location.A);
+            $('#place_k').val(place.geometry.location.k);
+            $('#place_icon').val(place.icon);
+            $('#place_name').val(place.name);
+            $('#place_address').val(address);
         });
 
         // Sets a listener on a radio button to change the filter type on Places
@@ -175,7 +181,12 @@
     <div class="form-group">
         <label for="pac-input" class="control-label col-xs-2">Місце</label>
         <div class="col-xs-10">
-            <input id="pac-input" name="pac-input" class="controls" type="text" placeholder="8 Гарбарська">
+            <input type="hidden" name="place_k" id="place_k">
+            <input type="hidden" name="place_a" id="place_a">
+            <input type="hidden" name="place_icon" id="place_icon">
+            <input type="hidden" name="place_name" id="place_name">
+            <input type="hidden" name="place_address" id="place_address">
+            <input id="pac-input" name="pac-input" class="controls" type="text" placeholder="8 Гарбарська" required>
             <div id="type-selector" class="controls">
                 <input type="radio" name="type" id="changetype-all" checked="checked">
                 <label for="changetype-all">All</label>
